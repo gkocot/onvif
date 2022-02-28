@@ -14,49 +14,50 @@ namespace WSDLExperiment01
 {
     class Program
     {
-		static Binding CreateBinding()
-		{
-			var binding = new CustomBinding ();
+        static Binding CreateBinding()
+        {
+            var binding = new CustomBinding();
             // The default TextMessageEncodingBindingElement() constructor creates MessageVersion of WS-Addressing 1.0 and SOAP 1.2.
             // The default text encoding is the UTF-8 format.
-			var textBindingElement = new TextMessageEncodingBindingElement();
+            var textBindingElement = new TextMessageEncodingBindingElement();
             // So we actually don't need this.
-			// var textBindingElement = new TextMessageEncodingBindingElement {
-			// 	MessageVersion = MessageVersion.CreateVersion (EnvelopeVersion.Soap12, AddressingVersion.None)
-			// };
-			var httpBindingElement = new HttpTransportBindingElement {
-				AllowCookies = true,
-				MaxBufferSize = int.MaxValue,
-				MaxReceivedMessageSize = int.MaxValue
-			};
+            // var textBindingElement = new TextMessageEncodingBindingElement {
+            // 	MessageVersion = MessageVersion.CreateVersion (EnvelopeVersion.Soap12, AddressingVersion.None)
+            // };
+            var httpBindingElement = new HttpTransportBindingElement
+            {
+                AllowCookies = true,
+                MaxBufferSize = int.MaxValue,
+                MaxReceivedMessageSize = int.MaxValue
+            };
 
-			binding.Elements.Add (textBindingElement);
-			binding.Elements.Add (httpBindingElement);
+            binding.Elements.Add(textBindingElement);
+            binding.Elements.Add(httpBindingElement);
 
-			return binding;
-		}
+            return binding;
+        }
 
-		// public static async Task<DeviceClient> CreateDeviceClientAsync (Uri uri, string username, string password)
-		// {
-		// 	var binding = CreateBinding ();
-		// 	var endpoint = new EndpointAddress (uri);
-		// 	var device = new DeviceClient (binding, endpoint);
-		// 	var time_shift = await GetDeviceTimeShift (device);
+        // public static async Task<DeviceClient> CreateDeviceClientAsync (Uri uri, string username, string password)
+        // {
+        // 	var binding = CreateBinding ();
+        // 	var endpoint = new EndpointAddress (uri);
+        // 	var device = new DeviceClient (binding, endpoint);
+        // 	var time_shift = await GetDeviceTimeShift (device);
 
-		// 	device = new DeviceClient (binding, endpoint);
-		// 	device.ChannelFactory.Endpoint.EndpointBehaviors.Clear ();
-		// 	device.ChannelFactory.Endpoint.EndpointBehaviors.Add (new SoapSecurityHeaderBehavior (username, password, time_shift));
+        // 	device = new DeviceClient (binding, endpoint);
+        // 	device.ChannelFactory.Endpoint.EndpointBehaviors.Clear ();
+        // 	device.ChannelFactory.Endpoint.EndpointBehaviors.Add (new SoapSecurityHeaderBehavior (username, password, time_shift));
 
-		// 	// Connectivity Test
-		// 	await device.OpenAsync ();
+        // 	// Connectivity Test
+        // 	await device.OpenAsync ();
 
-		// 	return device;
-		// }
+        // 	return device;
+        // }
 
-		// public static async Task<DeviceClient> CreateDeviceClientAsync (string host, string username, string password)
-		// {
-		// 	return await CreateDeviceClientAsync (new Uri ($"http://{host}/onvif/device_service"), username, password);
-		// }
+        // public static async Task<DeviceClient> CreateDeviceClientAsync (string host, string username, string password)
+        // {
+        // 	return await CreateDeviceClientAsync (new Uri ($"http://{host}/onvif/device_service"), username, password);
+        // }
 
         static async Task Main(string[] args)
         {
@@ -67,7 +68,7 @@ namespace WSDLExperiment01
                         new Uri("http://192.168.5.99/onvif/device_service"));
             var client = new DeviceClient(binding, endpointAddress);
             GetServicesResponse resp = await client.GetServicesAsync(true);
-            Console.WriteLine($"{JsonConvert.SerializeObject(resp)}");
+            Console.WriteLine($"{JsonConvert.SerializeObject(resp, Formatting.Indented)}");
         }
     }
 }
