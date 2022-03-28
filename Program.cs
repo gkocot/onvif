@@ -11,6 +11,8 @@ using CommandLine;
 // dotnet tool install --global dotnet-svcutil
 // dotnet-svcutil https://www.onvif.org/ver10/device/wsdl/devicemgmt.wsdl
 
+// dotnet run -- --host 192.168.5.114 --user admin --password visio1234
+
 namespace OnvifTool
 {
     public class Options
